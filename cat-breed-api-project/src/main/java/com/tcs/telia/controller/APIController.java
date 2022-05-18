@@ -28,7 +28,7 @@ public class APIController
 @Autowired
 APIService apiService;
 
-/*It displays a form to input data, here "command" is a reserved request attribute  
+/*It displays a form to input data, here "listCats" is a reserved request attribute  
  *which is used to display object data into form  
  */    
 @GetMapping("/")    
@@ -38,4 +38,60 @@ public String viewHomePage(Model model){
     return "index";  
 }
  
+/*It saves object into database. The @ModelAttribute puts request data  
+ *  into model object. */    
+@PostMapping("/saveCat")
+public String saveCat(@ModelAttribute("cat") CatBreed cat) {
+    // save catbreed to database
+    apiService.save(cat);
+    return "redirect:/";
+}
+
+
+@GetMapping("/showNewCatBreedForm")    
+public String showNewCatBreedForm(Model model){  
+	// create model attribute to bind form data
+    CatBreed cat= new CatBreed();    
+    model.addAttribute("cat",cat);  
+    return "new_cat_breed";    
+}   
+    
+/* It deletes record for the given id in URL and redirects to / */         
+@GetMapping("/deleteCat/{id}")
+public String deleteCat(@PathVariable(value = "id") String id) {
+
+    // call delete breed method
+    deleteBreed(id);
+    return "redirect:/";
+}
+
+
+//creating a delete mapping that deletes a specified cat breed
+@DeleteMapping("/breeds/{breedid}")
+private void deleteBreed(@PathVariable("breedid") String breedId) 
+{
+apiService.delete(breedId);
+}
+
+//creating a get mapping that retrieves all the cat breeds detail from the database
+
+@GetMapping("/breeds") private List<CatBreed> getAllBreeds() { return
+apiService.getAllBreeds(); }
+
+
+  //creating post mapping that save the cat breed detail in the database
+  
+  @PostMapping("/breeds") 
+  private String saveBreeds(@RequestBody CatBreed breeds) {
+	  apiService.save(breeds);
+	  return breeds.getId(); 
+	  }
+  
+  
+  //creating a get mapping that retrieves the detail of a specific breed
+  
+  @GetMapping("/breeds/{breedid}")
+  private CatBreed getBreeds(@PathVariable("breedid") String breedId) { return
+  apiService.getBreedById(breedId); }
+
 }
