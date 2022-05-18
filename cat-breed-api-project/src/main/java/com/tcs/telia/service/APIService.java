@@ -23,4 +23,26 @@ aPIRepository.findAll().forEach(cats1 -> cats.add(cats1));
 return cats;
 }
 
+//getting a specific record by using the method findById() of CrudRepository
+public CatBreed getBreedById(String id) 
+{
+return aPIRepository.findById(id).get();
+}
+
+//saving a specific record by using the method save() of CrudRepository
+public void save(CatBreed breeds) 
+{
+aPIRepository.save(breeds);
+}
+//deleting a specific record by using the method deleteById() of CrudRepository
+public void delete(String id) 
+{
+aPIRepository.deleteById(id);
+}
+//updating a record
+public void update(CatBreed cat, String catId) 
+{
+aPIRepository.save(cat);
+}
+
 }
