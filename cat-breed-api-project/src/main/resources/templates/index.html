@@ -11,6 +11,11 @@
 </head>
 <body>
 
+<div class="container my-2">
+    <h1>Cat Breed List</h1>
+    <a class="btn btn-primary btn-sm mb-3" th:href="@{/showNewCatBreedForm}"> Add Cat Breed </a>
+</div>
+
 <div>
     <table border="1" class="table table-striped table-responsive-md">
         <thead>
@@ -30,6 +35,8 @@
             <td th:text="${cat.weight}"></td>
             <td th:text="${cat.breed_group}"></td>
             <td th:text="${cat.description}"></td>
+            <td><a class="btn btn-danger" th:href="@{/deleteCat/{id}(id=${cat.id})}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
